@@ -1,0 +1,21 @@
+rules:
+  - id: jwt-none-alg
+    message: JWT verification should not allow 'none' as a valid algorithm.
+    languages:
+      - javascript
+    severity: ERROR
+    mode: taint
+    pattern-sources:
+      - pattern: |
+          let jwt = require("jsonwebtoken");
+          ...
+          jwt.verify($TOKEN, $SECRET, { algorithms: [$ALGS, ...] }, $CALLBACK);
+      - pattern: |
+          const jwt = require("jsonwebtoken");
+          ...
+    pattern-sinks:
+      - pattern: >
+          jwt.verify($TOKEN, $SECRET, { algorithms: [..., 'none', ...] },
+          $CALLBACK);
+      - pattern: |
+          jwt.verify($TOKEN, $SECRET, { algorithms: [..., 'none', ...]});  
