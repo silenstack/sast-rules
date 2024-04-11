@@ -1,0 +1,38 @@
+rules:
+  - id: overly-permissive-file-permission
+    message: Setting overly permissive file permissions can expose sensitive files
+      to unauthorised users.
+    languages:
+      - Java
+    severity: WARNING
+    metadata:
+      category: security
+      technology:
+        - java
+    mode: taint
+    pattern-sources:
+      - pattern: |
+          PosixFilePermissions.fromString("rw-rw-rw-");
+          PosixFilePermissions.fromString("rw-rw-r--");
+      - pattern: |
+          Files.setPosixFilePermissions($PATH, $PERMS);
+      - pattern: |
+          PosixFilePermission.OTHERS_READ;
+      - pattern: |
+          PosixFilePermission.OTHERS_WRITE;
+      - pattern: |
+          PosixFilePermission.OTHERS_EXECUTE;
+      - pattern: |
+          Files.setPosixFilePermissions(Paths.get($PATH),$PERMS);
+    pattern-sinks:
+      - pattern: |
+          Files.setPosixFilePermissions(Paths.get($PATH), $PERMS);           
+      - pattern: |
+          $PERMS.add(...)
+    pattern-sanitizers:
+      - pattern: >
+          Files.setPosixFilePermissions(Paths.get($PATH),
+          PosixFilePermissions.fromString("rw-rw----"))
+      - pattern: >
+          Files.setPosixFilePermissions(Paths.get($PATH),
+          PosixFilePermissions.fromString("rwxrwx---"))
