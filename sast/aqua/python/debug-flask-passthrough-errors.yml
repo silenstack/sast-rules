@@ -1,12 +1,8 @@
 rules:
   - id: debug-flask-passthrough-errors
-    message: The application is running debug code or has debug mode enabled. This
-      may expose sensitive information, like stack traces and environment
-      variables, to attackers. It may also modify application behavior,
-      potentially enabling attackers to bypass restrictions. To remediate this
-      finding, ensure that the application's debug code and debug mode are
-      disabled or removed from the production environment.
     severity: INFO
+    languages:
+      - python
     metadata:
       likelihood: LOW
       impact: MEDIUM
@@ -26,11 +22,15 @@ rules:
       license: Copyright 2024 Semgrep, Inc.
       vulnerability_class:
         - Active Debug Code
-    languages:
-      - python
     options:
       interfile: true
       symbolic_propagation: true
+    message: The application is running debug code or has debug mode enabled. This
+      may expose sensitive information, like stack traces and environment
+      variables, to attackers. It may also modify application behavior,
+      potentially enabling attackers to bypass restrictions. To remediate this
+      finding, ensure that the application's debug code and debug mode are
+      disabled or removed from the production environment.  
     mode: taint
     pattern-sources:
       - pattern: app.run(passthrough_errors=True)
