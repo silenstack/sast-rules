@@ -1,7 +1,8 @@
 rules:
-  - id: ftp-request
-    message: Detects potentially insecure FTP connections configurations
+  - id: ftp-request   
     severity: WARNING
+    languages:
+      - javascript
     metadata:
       category: security
       cwe: "CWE-319: Cleartext Transmission of Sensitive Information"
@@ -14,8 +15,7 @@ rules:
       license: Commons Clause License Condition v1.0[LGPL-2.1-only]
       vulnerability_class:
         - Mishandled Sensitive Information
-    languages:
-      - javascript
+    message: Detects potentially insecure FTP connections configurations  
     mode: taint
     pattern-sources:
       - pattern: |
