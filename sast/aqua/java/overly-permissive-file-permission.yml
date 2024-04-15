@@ -1,14 +1,14 @@
 rules:
   - id: overly-permissive-file-permission
-    message: Setting overly permissive file permissions can expose sensitive files
-      to unauthorised users.
+    severity: WARNING
     languages:
       - Java
-    severity: WARNING
     metadata:
       category: security
       technology:
         - java
+    message: Setting overly permissive file permissions can expose sensitive files
+      to unauthorised users.    
     mode: taint
     pattern-sources:
       - pattern: |
