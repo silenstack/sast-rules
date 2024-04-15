@@ -1,9 +1,17 @@
 rules:
   - id: jwt-none-alg
-    message: JWT verification should not allow 'none' as a valid algorithm.
+    severity: ERROR
     languages:
       - javascript
-    severity: ERROR
+    metadata:
+      CWE: 347
+      OWASP: A1
+      Category: Cryptographic Issues
+      Confidence: High
+      Likelihood: High
+      Reference: https://owasp.org/www-project-top-ten/2017/A1_2017-Injection
+      Vulnerability Class: Insecure JWT Configuration  
+    message: JWT verification should not allow 'none' as a valid algorithm.
     mode: taint
     pattern-sources:
       - pattern: |
