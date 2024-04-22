@@ -1,8 +1,8 @@
 rules:
   - id: dangerous-asyncio-create-exec
-    languages:
-      - python
     severity: ERROR
+    languages: 
+      - python
     metadata:
       owasp:
         - A01:2017 - Injection
